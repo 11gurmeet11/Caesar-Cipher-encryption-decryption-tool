@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Caesar Cipher – Glass UI</title>
+<style>
+  /* full‑screen background */
+  body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Inter,Arial,sans-serif;
+    background:url("https://images.hdqwalls.com/wallpapers/dark-abstract-black-minimal-4k-q0.jpg") 
+               center/cover no-repeat fixed;
+  }
+  /* glass card */
+  .card{
+    width:320px;
+    padding:30px 40px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.07);      /* faint white */
+    border:1px solid rgba(255,255,255,0.18);
+    box-shadow:0 8px 32px 0 rgba(0,0,0,0.4);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    color:#e0e0e0;
+  }
+  h1{margin:0 0 20px;text-align:center;font-size:1.4rem}
+  label{display:block;margin:12px 0 4px;font-size:0.9rem}
+  input[type=text],input[type=number]{
+    width:100%;padding:9px 10px;border:none;border-radius:8px;
+    background:rgba(255,255,255,0.12);color:#f0f0f0;
+    outline:none;
+  }
+  input[type=text]::placeholder{color:#c2c2c2}
+  button{
+    width:48%;padding:11px;border:none;border-radius:8px;
+    background:rgba(255,255,255,0.18);color:#fff;font-weight:600;
+    cursor:pointer;transition:background 0.25s;
+  }
+  button:hover{background:rgba(255,255,255,0.3)}
+  #out{
+    margin-top:14px;padding:10px;min-height:38px;border-radius:8px;
+    background:rgba(255,255,255,0.12);word-wrap:break-word;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Caesar Cipher</h1>
+    <label for="text">Text</label>
+    <input id="text" type="text" placeholder="Enter text…" />
+
+    <label for="shift">Shift</label>
+    <input id="shift" type="number" value="3" />
+
+    <div style="display:flex;justify-content:space-between;margin-top:18px">
+      <button onclick="run(true)">Encrypt</button>
+      <button onclick="run(false)">Decrypt</button>
+    </div>
+
+    <label style="margin-top:20px">Result</label>
+    <div id="out"></div>
+  </div>
+
+<script>
+function caesar(str, shift){
+  return [...str].map(ch=>{
+    const A=65,a=97,c=ch.charCodeAt(0);
+    if(c>=A&&c<=90)  return String.fromCharCode((c-A+shift+26)%26+A);
+    if(c>=a&&c<=122) return String.fromCharCode((c-a+shift+26)%26+a);
+    return ch;
+  }).join("");
+}
+function run(enc){
+  const txt=document.getElementById("text").value;
+  const sh=parseInt(document.getElementById("shift").value||0,10);
+  document.getElementById("out").textContent=caesar(txt,enc?sh:-sh);
+}
+</script>
+</body>
+</html>
